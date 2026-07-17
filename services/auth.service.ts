@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { hashPassword } from "@/lib/password";
 import type { RegisterInput } from "@/validators/auth.schema";
+import { ConflictError } from "@/lib/errors/conflict-error";
 
 export async function registerUser(data: RegisterInput) {
 
@@ -12,7 +13,7 @@ export async function registerUser(data: RegisterInput) {
   });
 
   if (existingUser) {
-    throw new Error("Email already exists");
+    throw new ConflictError('Email already exists')
   }
 
   // Hash password
