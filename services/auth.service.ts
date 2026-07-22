@@ -40,7 +40,7 @@ export async function registerUser(data: RegisterInput) {
   return user;
 }
 
-export async function LoginUser(data: LoginInput) {
+export async function loginUser(data: LoginInput) {
   // Check if email already exists
   const user = await prisma.user.findUnique({
     where: {

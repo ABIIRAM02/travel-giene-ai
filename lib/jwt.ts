@@ -1,5 +1,9 @@
 import { jwtVerify, SignJWT } from "jose";
 
+interface JwtPayload {
+    userId: string;
+}
+
 const jwtSecret = process.env.JWT_SECRET;
 
 if (!jwtSecret) {
@@ -26,8 +30,11 @@ export async function generateToken(userId: string): Promise<string> {
 
 }
 
-export async function verifyToken(token: string) {
-  const { payload } = await jwtVerify(token, secret);
+export async function verifyToken(
+  token: string
+): Promise<JwtPayload> {
 
-  return payload;
+    const { payload } = await jwtVerify(token, secret);
+
+    return payload as unknown as JwtPayload;
 }
