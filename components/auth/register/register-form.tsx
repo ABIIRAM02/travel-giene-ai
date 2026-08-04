@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../common/input";
 import { RegisterInput, registerSchema } from "@/validators/auth.schema";
 import { useForm } from "react-hook-form";
+import { registerAPI } from "@/services/auth.client";
 
 const RegisterForm = () => {
   const {
@@ -14,8 +15,15 @@ const RegisterForm = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = (data: RegisterInput) => {
-    console.log(data);
+  const onSubmit = async (data: RegisterInput) => {
+
+    try {
+      const response = await registerAPI(data)
+      console.log({response})
+    } catch (error) {
+      console.log({error})
+    }
+    
   };
 
   return (

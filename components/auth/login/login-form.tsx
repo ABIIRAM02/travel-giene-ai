@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { loginSchema, LoginInput } from "@/validators/auth.schema";
 import Input from "../common/input";
+import { login } from "@/services/auth.client";
 
 const Loginform = () => {
     
@@ -12,8 +13,14 @@ const Loginform = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: LoginInput) => {
-    console.log(data);
+  const onSubmit = async (data: LoginInput) => {
+    try{
+      const response = await login(data);
+      console.log({response})
+    }catch(err){
+      console.log({loginErr: err})
+    }
+
   };
 
   return (
@@ -39,7 +46,7 @@ const Loginform = () => {
         <input type="checkbox" />
         <p>Remember me for 30 days</p>
       </div>
-      <button className="w-full rounded-full bg-neutral-800 text-base py-3 text-white">
+      <button className="w-full rounded-full bg-neutral-800 text-base py-3 text-white cursor-pointer">
         Sign in
       </button>
     </form>
