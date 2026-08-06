@@ -13,3 +13,6 @@ export function setAuthCookie(response: NextResponse, token: string) {
     maxAge: SEVEN_DAYS_IN_SECONDS,
   });
 }
+export function clearAuthCookie(response: NextResponse) {
+  response.cookies.delete("token");
+}

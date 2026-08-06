@@ -10,25 +10,20 @@ export interface AuthUser {
   plan: string;
 }
 
-interface LoginResponse {
-  message:string,
-  user : AuthUser
-}
-
-interface RegisterResponse {
+interface AuthResponse {
   message:string,
   user : AuthUser
 }
 
 export async function login(data: LoginInput) {
-  return api<LoginResponse>("/api/auth/login", {
+  return api<AuthResponse>("/api/auth/login", {
     method: "POST",
     body: JSON.stringify(data),
   });
 }
 
 export async function registerAPI(data: RegisterInput) {
-  return api<RegisterResponse>("/api/auth/register", {
+  return api<AuthResponse>("/api/auth/register", {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -36,4 +31,8 @@ export async function registerAPI(data: RegisterInput) {
 
 export async function logout() {}
 
-export async function getCurrentUser() {}
+export async function getCurrentUser() {
+   return api<AuthResponse>("/api/auth/me", {
+    method: "GET",
+  });
+}

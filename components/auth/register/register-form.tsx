@@ -1,33 +1,39 @@
-"use client"
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../common/input";
 import { RegisterInput, registerSchema } from "@/validators/auth.schema";
 import { useForm } from "react-hook-form";
 import { registerAPI } from "@/services/auth.client";
+import { useRouter, useSearchParams } from "next/navigation";
+import { redirectDestination } from "@/utils/login-helper";
 
 const RegisterForm = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
   });
 
   const onSubmit = async (data: RegisterInput) => {
-
     try {
-      const response = await registerAPI(data)
-      console.log({response})
+      await registerAPI(data);
+      redirectDestination(searchParams, router);
     } catch (error) {
-      console.log({error})
+      console.log({ error });
     }
-    
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full gap-2 pt-2">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col w-full gap-2 pt-2"
+    >
       <Input
         placeholder="Abiram"
         label="Full name"
@@ -69,7 +75,10 @@ const RegisterForm = () => {
           <span className="text-blue-400">tearms and condititons</span>
         </p>
       </div>
-      <button className="w-full rounded-full bg-neutral-800 text-base py-3 text-white">
+      <button
+        disabled={isSubmitting}
+        className="w-full rounded-full bg-neutral-800 text-base py-3 text-white"
+      >
         Create Account
       </button>
     </form>

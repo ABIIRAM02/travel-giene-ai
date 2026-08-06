@@ -6,25 +6,35 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginInput } from "@/validators/auth.schema";
 import Input from "../common/input";
 import { login } from "@/services/auth.client";
+import { useRouter, useSearchParams } from "next/navigation";
+import { redirectDestination } from "@/utils/login-helper";
 
 const Loginform = () => {
-    
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>({
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
 
   const onSubmit = async (data: LoginInput) => {
-    try{
-      const response = await login(data);
-      console.log({response})
-    }catch(err){
-      console.log({loginErr: err})
+    try {
+      await login(data);
+      redirectDestination(searchParams, router);
+    } catch (err) {
+      console.log({ loginErr: err });
     }
-
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full gap-2 pt-2">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col w-full gap-2 pt-2"
+    >
       <Input
         placeholder="abii@gmail.com"
         label="Email"
@@ -46,7 +56,7 @@ const Loginform = () => {
         <input type="checkbox" />
         <p>Remember me for 30 days</p>
       </div>
-      <button className="w-full rounded-full bg-neutral-800 text-base py-3 text-white cursor-pointer">
+      <button disabled={isSubmitting} className="w-full rounded-full bg-neutral-800 text-base py-3 text-white cursor-pointer">
         Sign in
       </button>
     </form>
