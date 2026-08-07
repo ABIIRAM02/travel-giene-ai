@@ -4,7 +4,7 @@ import Oauth from "./Oauth-login";
 import Loginform from "../login/login-form";
 
 interface maincard {
-    isRegister : boolean
+    isRegister? : boolean
     h2 : string
     p : string
 }

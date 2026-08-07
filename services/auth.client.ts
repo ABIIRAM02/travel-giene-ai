@@ -11,8 +11,8 @@ export interface AuthUser {
 }
 
 interface AuthResponse {
-  message:string,
-  user : AuthUser
+  message: string;
+  user: AuthUser;
 }
 
 export async function login(data: LoginInput) {
@@ -29,10 +29,14 @@ export async function registerAPI(data: RegisterInput) {
   });
 }
 
-export async function logout() {}
+export async function logout() {
+  return api<{ message: string }>("/api/auth/logout", {
+    method: "POST",
+  });
+}
 
 export async function getCurrentUser() {
-   return api<AuthResponse>("/api/auth/me", {
+  return api<AuthResponse>("/api/auth/me", {
     method: "GET",
   });
 }

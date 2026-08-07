@@ -14,5 +14,8 @@ export function setAuthCookie(response: NextResponse, token: string) {
   });
 }
 export function clearAuthCookie(response: NextResponse) {
-  response.cookies.delete("token");
+  response.cookies.delete({
+    name: "token",
+    path: "/",
+  });
 }
