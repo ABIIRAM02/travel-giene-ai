@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <main className="grid grid-cols-2 h-screen">
       <LoginInfoCard />
-      <MainCard isRegister={false} h2="Welcome back" p="Sign in to continue planning your next adventure." />
+      <MainCard  h2="Welcome back" p="Sign in to continue planning your next adventure." />
     </main>
   );
 };
