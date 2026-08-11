@@ -12,9 +12,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   async function initializeAuth() {
     try {
-      const data = await getCurrentUser();
-      console.log({data})
-      dispatch(setUser(data));
+      const { user } = await getCurrentUser();
+      console.log({user})
+      dispatch(setUser(user));
     } catch (err) {
       console.log({ authProviderErr: err });
       dispatch(clearUser());

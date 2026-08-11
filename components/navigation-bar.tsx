@@ -8,10 +8,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 interface registerProp {
   isRegister?: boolean;
-  isDashboard?: boolean;
+  isLandingPage?: boolean;
 }
 
-const Navbar = ({ isRegister = false, isDashboard = false }: registerProp) => {
+const Navbar = ({ isRegister = false, isLandingPage = false }: registerProp) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const redirect = searchParams.get("redirect");
@@ -44,7 +44,7 @@ const Navbar = ({ isRegister = false, isDashboard = false }: registerProp) => {
     <main className="py-4">
       <div className="flex justify-between items-center">
         <p>TravelGenie</p>
-        {isDashboard ? (
+        {isLandingPage ? (
           <button className="cursor-pointer" onClick={handleLogout}>
             Logout
           </button>
