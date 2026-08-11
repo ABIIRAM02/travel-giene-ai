@@ -8,22 +8,22 @@ import { setAuthCookie } from "@/utils/auth-cookie";
 import { generateToken } from "@/lib/jwt";
 
 export async function POST(request: Request) {
-  const userData = await request.json();
-  const validationResult = registerSchema.safeParse(userData);
-
-  if (!validationResult.success) {
-    return NextResponse.json(
-      {
-        message: "Validation failed",
-        errors: formatZodErrors(validationResult.error.issues),
-      },
-      {
-        status: 400,
-      },
-    );
-  }
-
   try {
+    const userData = await request.json();
+    const validationResult = registerSchema.safeParse(userData);
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          message: "Validation failed",
+          errors: formatZodErrors(validationResult.error.issues),
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
     const user = await registerUser(validationResult.data);
 
     const token = await generateToken(user.id);
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
           message: error.message,
         },
         {
-          status: 400,
+          status: error.statusCode,
         },
       );
     }

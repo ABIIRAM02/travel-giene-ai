@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "../styles/utilities.css"
 import { inter, poppins } from "@/styles/fonts";
 import ReduxProvider from "@/redux/provider";
 import AuthProvider from "@/components/auth/auth-provider";
