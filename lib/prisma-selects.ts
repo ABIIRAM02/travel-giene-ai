@@ -12,6 +12,9 @@ export const tripSelect = {
   days: true,
   budget: true,
   travelStyle: true,
+  travelGroup: true,
+  interests: true,
+  userId: true,
   createdAt: true,
   updatedAt: true,
-} as const;
+};

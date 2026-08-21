@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { verifyToken } from "@/lib/jwt";
-import { getUserById } from "@/services/user.service";
+import { getUserById } from "@/services/server/user.service";
 import { AppError } from "@/lib/errors/app-error";
 
 export async function GET() {

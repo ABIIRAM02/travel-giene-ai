@@ -1,21 +1,21 @@
+import { ButtonHTMLAttributes } from "react"
 
-interface WrapperProp {
+interface WrapperProp extends ButtonHTMLAttributes<HTMLButtonElement> {
+    selected?: boolean
     option: {
-        name: string
-        icon: any
+        name?: string
+        icon?: any
     },
-    selected? : boolean
     classname? : string
 }
-
-const GradintWrapper = ({ option, selected = true, classname} : WrapperProp) => {
+const GradintWrapper = ({ option, selected = true, classname, ...rest} : WrapperProp) => {
 
 
   return (
-    <div className={`${selected ? 'bg-gradient-primary text-background' : 'text-foreground'} rounded-full py-2.5 px-5 flex items-center gap-2 ${classname}`} >
+    <button className={`${selected ? 'bg-gradient-primary text-background' : 'text-foreground'} rounded-full py-2.5 px-5 flex items-center gap-2 cursor-pointer ${classname}`} {...rest}>
         <span>{option.icon}</span>
         <span className="font-semibold" >{option.name}</span>
-    </div>
+    </button>
   )
 }
 

@@ -12,7 +12,9 @@ model Trip {
   destination String
   days        Int
   budget      Float
-  travelStyle String
+  travelStyle String[] @default([])
+  travelGroup String
+  interests   String[] @default([])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   userId      String

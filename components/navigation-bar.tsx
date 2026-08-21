@@ -2,7 +2,7 @@
 
 import { useAppDispatch } from "@/redux/hooks";
 import { clearUser } from "@/redux/slices/auth.slice";
-import { logout } from "@/services/auth.client";
+import { logout } from "@/services/client/auth.client";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 

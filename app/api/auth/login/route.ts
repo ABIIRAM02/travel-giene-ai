@@ -1,7 +1,7 @@
 import { AppError } from "@/lib/errors/app-error";
 import { generateToken } from "@/lib/jwt";
 import { formatZodErrors } from "@/lib/validation";
-import { loginUser } from "@/services/auth.service";
+import { loginUser } from "@/services/server/auth.service";
 import { setAuthCookie } from "@/utils/auth-cookie";
 import { loginSchema } from "@/validators/auth.schema";
 import { NextResponse } from "next/server";
