@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../common/input";
 import { RegisterInput, registerSchema } from "@/validators/auth.schema";
 import { useForm } from "react-hook-form";
-import { registerAPI } from "@/services/auth.client";
+import { registerAPI } from "@/services/client/auth.client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { redirectDestination } from "@/utils/login-helper";
 

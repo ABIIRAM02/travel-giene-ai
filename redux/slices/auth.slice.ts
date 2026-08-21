@@ -1,4 +1,4 @@
-import { AuthUser } from "@/services/auth.client";
+import { AuthUser } from "@/services/client/auth.client";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface AuthState {

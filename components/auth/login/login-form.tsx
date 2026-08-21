@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { loginSchema, LoginInput } from "@/validators/auth.schema";
 import Input from "../common/input";
-import { login } from "@/services/auth.client";
+import { login } from "@/services/client/auth.client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { redirectDestination } from "@/utils/login-helper";
 

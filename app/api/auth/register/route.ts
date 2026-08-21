@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { registerSchema } from "@/validators/auth.schema";
 import { formatZodErrors } from "@/lib/validation";
-import { registerUser } from "@/services/auth.service";
+import { registerUser } from "@/services/server/auth.service";
 import { AppError } from "@/lib/errors/app-error";
 import { setAuthCookie } from "@/utils/auth-cookie";
 import { generateToken } from "@/lib/jwt";

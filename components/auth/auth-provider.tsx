@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearUser, setLoading, setUser } from "@/redux/slices/auth.slice";
-import { getCurrentUser } from "@/services/auth.client";
+import { getCurrentUser } from "@/services/client/auth.client";
 import { ReactNode, useEffect } from "react";
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {

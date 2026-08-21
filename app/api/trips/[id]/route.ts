@@ -1,6 +1,6 @@
 import { AppError } from "@/lib/errors/app-error";
 import { formatZodErrors } from "@/lib/validation";
-import { deleteTrip, getTripById, updateTrip } from "@/services/trip.service";
+import { deleteTrip, getTripById, updateTrip } from "@/services/server/trip.service";
 import { getAuthenticatedUserId } from "@/utils/auth-check";
 import { tripUpdateSchema } from "@/validators/trip.schema";
 import { NextRequest, NextResponse } from "next/server";
