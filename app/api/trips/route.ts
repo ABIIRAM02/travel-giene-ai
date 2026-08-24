@@ -77,6 +77,7 @@ export async function GET() {
     );
   } catch (error) {
     if (error instanceof AppError) {
+      console.log({error})
       return NextResponse.json(
         {
           message: error.message,
