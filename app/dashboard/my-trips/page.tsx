@@ -1,8 +1,11 @@
+import Trips from '@/components/trips/trips'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <main>
+      <Trips />
+    </main>
   )
 }
 
