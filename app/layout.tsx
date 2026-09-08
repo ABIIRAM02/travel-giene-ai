@@ -3,6 +3,7 @@ import "./globals.css";
 import { inter, poppins } from "@/styles/fonts";
 import ReduxProvider from "@/redux/provider";
 import AuthProvider from "@/components/auth/auth-provider";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "Travel Genie AI",
@@ -19,9 +20,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} font-inter text-sm bg`}
       >
-        <ReduxProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </ReduxProvider>
+        <Providers>
+          <ReduxProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ReduxProvider>
+        </Providers>
       </body>
     </html>
   );

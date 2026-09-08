@@ -1,26 +1,13 @@
+import { tripSelect } from "@/services/client/trip.client";
 import { useRouter } from "next/navigation";
 
-
-type tripSelect = {
-  id: string;
-  destination: string;
-  days: number;
-  budget: number;
-  travelStyle: string[];
-  travelGroup: string;
-  interests: string[];
-  userId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
 interface itineraryProps {
-  tripData: tripSelect
+  tripData: tripSelect,
 }
 
 const ItineraryCard = ({ tripData }: itineraryProps) => {
 
-  const { destination, travelGroup, id } = tripData;
+  const { destination, travelGroup, id, itineraryStatus } = tripData;
 
     const router = useRouter();
 
@@ -37,8 +24,8 @@ const ItineraryCard = ({ tripData }: itineraryProps) => {
       </div>
       <div className="h-1/2 border rounded-b-2xl p-4 flex flex-col justify-between">
         <span className="text-center">{travelGroup}</span>
-        <button onClick={handleOpenItinerary} className="p-3 font-semibold rounded-full w-full bg-secondary cursor-pointer">
-          Open itinerary
+        <button disabled={itineraryStatus !== "COMPLETED"} onClick={handleOpenItinerary} className="p-3 font-semibold rounded-full w-full bg-secondary cursor-pointer">
+          {itineraryStatus === "COMPLETED" ? 'Open itinerary' : itineraryStatus}
         </button>
       </div>
     </section>

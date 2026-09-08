@@ -7,6 +7,13 @@ datasource db {
   provider = "postgresql"
 }
 
+enum ItineraryStatus {
+  PENDING
+  GENERATING
+  COMPLETED
+  FAILED
+}
+
 model Trip {
   id          String   @id @default(cuid())
   destination String
@@ -18,6 +25,10 @@ model Trip {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   userId      String
+
+  itinerary Json?
+  itineraryStatus ItineraryStatus @default(PENDING)
+  
   user        User     @relation(fields: [userId], references: [id])
 }
 

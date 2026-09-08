@@ -21,6 +21,8 @@ import {
 import { generateTrip } from "@/services/client/trip.client";
 import { PlannerInput } from "./planner-input";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { setGenerateItineraryForId } from "@/redux/slices/itinerary.slice";
 
 const PlannerForm = () => {
   const {
@@ -36,6 +38,7 @@ const PlannerForm = () => {
   });
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [travelStyleCollection, setTravelStyleCollection] =
     useState(TRAVEL_STYLE);
@@ -52,7 +55,9 @@ const PlannerForm = () => {
 
   const handleGenerate = async (data: TripInput) => {
     try {
-      await generateTrip(data);
+      const { trip: { id } } = await generateTrip(data);
+      console.log({beforeDispatch: id})
+      dispatch(setGenerateItineraryForId(id));
       router.push("/dashboard/my-trips");
     } catch (error) {
       console.log({ plannerError: error });

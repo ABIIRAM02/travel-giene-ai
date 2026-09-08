@@ -17,4 +17,6 @@ export const tripSelect = {
   userId: true,
   createdAt: true,
   updatedAt: true,
+  itineraryStatus: true,
+  itinerary: true
 };
