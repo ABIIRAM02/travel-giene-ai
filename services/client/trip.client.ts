@@ -12,6 +12,8 @@ export type tripSelect = {
   userId: string;
   createdAt: string;
   updatedAt: string;
+  itineraryStatus: string
+  itinerary:JSON
 };
 
 interface tripResponse {

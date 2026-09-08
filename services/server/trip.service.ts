@@ -3,11 +3,11 @@ import { prisma } from "@/lib/prisma";
 import { tripSelect } from "@/lib/prisma-selects";
 import { TripInput, TripUpdateInput } from "@/validators/trip.schema";
 
-export async function createTrip(tripData: TripInput, userId:string) {
+export async function createTrip(tripData: TripInput, userId: string) {
   const trip = await prisma.trip.create({
     data: {
       ...tripData,
-      userId
+      userId,
     },
     select: tripSelect,
   });
