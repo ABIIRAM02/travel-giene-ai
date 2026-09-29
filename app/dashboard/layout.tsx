@@ -9,9 +9,9 @@ const layout = ({
   return (
     <div className="flex" >
       <Sidebar/>
-      <main className="flex-1 h-screen" >
+      <main className="flex-1 h-screen ml-[calc(100%/6)]" >
         <DashboardNav />
-        <section className="p-8" >
+        <section className="p-8 mt-16" >
           {children}
         </section>
       </main>

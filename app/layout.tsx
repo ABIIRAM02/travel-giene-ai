@@ -4,6 +4,7 @@ import { inter, poppins } from "@/styles/fonts";
 import ReduxProvider from "@/redux/provider";
 import AuthProvider from "@/components/auth/auth-provider";
 import Providers from "./providers";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Travel Genie AI",
@@ -22,7 +23,10 @@ export default function RootLayout({
       >
         <Providers>
           <ReduxProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              {children}
+              <Toaster />
+            </AuthProvider>
           </ReduxProvider>
         </Providers>
       </body>

@@ -8,6 +8,9 @@
 @theme {
   --font-inter: var(--font-inter);
   --font-poppins: var(--font-poppins);
+  --text-xs: 0.8000rem; /* 13px */
+  --text-sm: 15px; 
+  --text-xs--line-height: 1.25rem;
 }
 
 @theme inline {
@@ -30,6 +33,7 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-glow: var(--primary-glow);
+  --color-primary-icon-background: var(--primary-icon-background);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -77,6 +81,7 @@
   --primary: oklch(0.552 0.208 262);
   --primary-foreground: oklch(0.99 0 0);
   --primary-glow: oklch(0.68 0.18 258);
+  --primary-icon-background: oklch(95.5% .03 258);
 
   --secondary: oklch(0.97 0.008 250);
   --secondary-foreground: oklch(0.22 0.03 260);

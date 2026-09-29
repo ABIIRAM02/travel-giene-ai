@@ -7,6 +7,7 @@ import ItineraryCard from "./itinerary-card";
 import { generateItineraryById } from "@/services/client/itinerary.client";
 import { useTripPoll } from "@/hooks/use-trip";
 import { useGenerateItinerary } from "@/hooks/use-generate-itinerary";
+import { appToast } from "../ui/toaster";
 
 const ItineraryCardWrapper = () => {
   const [tripsData, setTrips] = useState<tripSelect[]>([]);
@@ -47,10 +48,61 @@ const ItineraryCardWrapper = () => {
     generateMutation.isSuccess,
   ]);
 
+  useEffect(() => {
+    switch (tripPollQuery.data?.trip?.itineraryStatus) {
+      case "PENDING": {
+        appToast.info({
+          title: "Ready to generate",
+          description: "Your itinerary is about to be created.",
+          closeButton: true,
+        });
+        break;
+      }
+      case "GENERATING": {
+        appToast.info({
+          title: "Creating your itinerary ✨",
+          description:
+            "Feel free to explore the app. We'll have your itinerary ready soon.",
+          closeButton: true,
+        });
+        break;
+      }
+      case "COMPLETED": {
+        appToast.success({
+          title: "Itinerary Ready!",
+          description:
+            "Your personalized itinerary has been generated successfully.",
+          closeButton: true,
+        });
+        break;
+      }
+      case "FAILED": {
+        appToast.error({
+          title: "Error",
+          description:
+            "Something went wrong while creating your itinerary. Please try again.",
+          // action: {
+          //   label: "Retry",
+          //   onClick: () => {},
+          // },
+          closeButton: true,
+        });
+        break;
+      }
+      default:
+        null;
+    }
+  }, [tripPollQuery.data?.trip?.itineraryStatus]);
+
   return (
     <section className="flex w-full flex-wrap gap-5 my-10">
       {[...tripsData]?.reverse().map((trip: tripSelect) => (
-        <ItineraryCard key={trip.id} tripData={trip.id === itineraryId ? (tripPollQuery.data?.trip || trip) : trip} />
+        <ItineraryCard
+          key={trip.id}
+          tripData={
+            trip.id === itineraryId ? tripPollQuery.data?.trip || trip : trip
+          }
+        />
       ))}
     </section>
   );

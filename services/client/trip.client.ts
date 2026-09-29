@@ -1,4 +1,5 @@
 import { api } from "@/utils/api";
+import { Itinerary } from "@/validators/itinerary.schema";
 import { TripInput } from "@/validators/trip.schema";
 
 export type tripSelect = {
@@ -13,7 +14,7 @@ export type tripSelect = {
   createdAt: string;
   updatedAt: string;
   itineraryStatus: string
-  itinerary:JSON
+  itinerary: Itinerary
 };
 
 interface tripResponse {

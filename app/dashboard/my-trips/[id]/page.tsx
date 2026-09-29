@@ -1,10 +1,10 @@
-import Itinerary from "@/components/itinenary/Itinenary"
+import ItineraryPage from "@/components/itinenary/ItineraryPage"
 
 
 const page = () => {
   return (
     <main>
-        <Itinerary />
+        <ItineraryPage />
     </main>
   )
 }

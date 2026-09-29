@@ -23,6 +23,7 @@ import { PlannerInput } from "./planner-input";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { setGenerateItineraryForId } from "@/redux/slices/itinerary.slice";
+import { appToastError } from "@/lib/errors/toast-error";
 
 const PlannerForm = () => {
   const {
@@ -55,17 +56,17 @@ const PlannerForm = () => {
 
   const handleGenerate = async (data: TripInput) => {
     try {
-      const { trip: { id } } = await generateTrip(data);
-      console.log({beforeDispatch: id})
+      const {
+        trip: { id },
+      } = await generateTrip(data);
       dispatch(setGenerateItineraryForId(id));
       router.push("/dashboard/my-trips");
     } catch (error) {
-      console.log({ plannerError: error });
+      appToastError(error);
     }
   };
 
   const handleInterestsValues = (e: any) => {
-
     const value = e.target.value;
 
     const regex = /^[A-Za-z,]*$/;

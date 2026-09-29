@@ -20,7 +20,7 @@ const Sidebar = () => {
   };
 
   return (
-    <main className="border-r w-1/6 ">
+    <main className="border-r w-1/6 fixed h-full bottom-0">
       <div className="h-16 border-b px-4 flex justify-center flex-col">
         <h2>TravelGenie</h2>
         <span>AI</span>
@@ -28,6 +28,8 @@ const Sidebar = () => {
       <p className="uppercase font-semibold text-[11px] px-7 pt-6 pb-3 text-gray-500">
         Workspace
       </p>
+      <div className="flex flex-col justify-between h-full" >
+        
       <section className="px-4 flex flex-col gap-2">
         {SIDE_BAR_OPTIONS.map((option) => (
           <GradintWrapper
@@ -38,6 +40,9 @@ const Sidebar = () => {
           />
         ))}
       </section>
+
+      <span>sign out</span>
+      </div>
     </main>
   );
 };

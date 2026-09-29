@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearUser, setLoading, setUser } from "@/redux/slices/auth.slice";
 import { getCurrentUser } from "@/services/client/auth.client";
 import { ReactNode, useEffect } from "react";
+import { appToastError } from "@/lib/errors/toast-error";
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   
@@ -13,11 +14,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   async function initializeAuth() {
     try {
       const { user } = await getCurrentUser();
-      console.log({user})
       dispatch(setUser(user));
-    } catch (err) {
-      console.log({ authProviderErr: err });
+    } catch (err:any) {
       dispatch(clearUser());
+      appToastError(err)
     } finally {
       dispatch(setLoading(false));
     }
