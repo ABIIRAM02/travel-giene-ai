@@ -16,7 +16,7 @@ const ItineraryCard = ({ tripData }: itineraryProps) => {
     };
 
   return (
-    <section className="w-full shrink-0 rounded-2xl flex flex-col h-70 hover-lift md:w-[calc((100%_-_3rem)_/_3)]">
+    <section className="w-full shrink-0 rounded-2xl flex flex-col h-70 hover-lift md:w-[calc((100%_-_3rem)_/_3)] border border-border bg-card ">
       <div className="h-1/2 border rounded-t-2xl relative">
         <span className="absolute bottom-3 font-semibold px-5">
           {destination}

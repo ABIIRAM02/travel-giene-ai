@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { registerAPI } from "@/services/client/auth.client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { redirectDestination } from "@/utils/login-helper";
+import { appToastError } from "@/lib/errors/toast-error";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const RegisterForm = () => {
       await registerAPI(data);
       redirectDestination(searchParams, router);
     } catch (error) {
-      console.log({ error });
+      appToastError(error);
     }
   };
 

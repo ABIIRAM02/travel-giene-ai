@@ -26,6 +26,8 @@ export async function generateItinerary(trip: {
       Travel style: ${trip.travelStyle.join(", ")}
       Travel group: ${trip.travelGroup}
       Interests: ${trip.interests?.join(", ") || "None specified"}
+
+      note: make mainTitle very short and don't include days or any trip data into it.
     `,
   });
 

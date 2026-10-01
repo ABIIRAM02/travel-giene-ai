@@ -1,7 +1,8 @@
 import { z } from "zod";
 
 export const itinerarySchema = z.object({
-  title: z.string(),
+  mainTitle: z.string(),
+  summary: z.string(),
 
   budget: z.object({
     total: z.number(),

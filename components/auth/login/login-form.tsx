@@ -8,6 +8,7 @@ import Input from "../common/input";
 import { login } from "@/services/client/auth.client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { redirectDestination } from "@/utils/login-helper";
+import { appToastError } from "@/lib/errors/toast-error";
 
 const Loginform = () => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const Loginform = () => {
       await login(data);
       redirectDestination(searchParams, router);
     } catch (err) {
-      console.log({ loginErr: err });
+      appToastError(err);
     }
   };
 
@@ -56,7 +57,10 @@ const Loginform = () => {
         <input type="checkbox" />
         <p>Remember me for 30 days</p>
       </div>
-      <button disabled={isSubmitting} className="w-full rounded-full bg-neutral-800 text-base py-3 text-white cursor-pointer">
+      <button
+        disabled={isSubmitting}
+        className="w-full rounded-full bg-neutral-800 text-base py-3 text-white cursor-pointer"
+      >
         Sign in
       </button>
     </form>
