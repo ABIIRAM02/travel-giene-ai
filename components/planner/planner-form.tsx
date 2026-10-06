@@ -58,7 +58,7 @@ const PlannerForm = () => {
     try {
       const {
         trip: { id },
-      } = await generateTrip(data);
+      }: any = await generateTrip(data);
       dispatch(setGenerateItineraryForId(id));
       router.push("/dashboard/my-trips");
     } catch (error) {
@@ -97,15 +97,14 @@ const PlannerForm = () => {
         <div className="flex gap-5 justify-between w-full">
           {PLANNER_FORM_INPUTS.map((input) => (
             <PlannerInput
-              key={input.label}
+              key={input.name}
               label={input.label}
               icon={input.icon}
               type={input.type}
-              error={errors[input.label as keyof TripInput]?.message}
-              {...register(
-                input.label as keyof TripInput,
-                input.type === "number" ? { valueAsNumber: true } : undefined,
-              )}
+              error={errors[input.name as keyof TripInput]?.message}
+              {...register(input.name as keyof TripInput, {
+                ...(input.type === "number" ? { valueAsNumber: true } : {}),
+              })}
             />
           ))}
         </div>

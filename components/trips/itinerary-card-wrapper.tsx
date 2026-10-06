@@ -1,13 +1,15 @@
 "use client";
-import { fetchTrips, tripSelect } from "@/services/client/trip.client";
+import { fetchTrips } from "@/services/client/trip.client";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setTripsData } from "@/redux/slices/trip.slice";
 import ItineraryCard from "./itinerary-card";
 import { generateItineraryById } from "@/services/client/itinerary.client";
-import { useTripPoll } from "@/hooks/use-trip";
+import { useTripPoll } from "@/hooks/use-trip-poll";
 import { useGenerateItinerary } from "@/hooks/use-generate-itinerary";
 import { appToast } from "../ui/toaster";
+import { useTripFetch } from "@/hooks/use-trips-fetch";
+import { tripSelect } from "@/utils/types";
 
 const ItineraryCardWrapper = () => {
   const [tripsData, setTrips] = useState<tripSelect[]>([]);
@@ -16,18 +18,22 @@ const ItineraryCardWrapper = () => {
   );
   const dispatch = useAppDispatch();
 
+  const { data, isLoading, error } = useTripFetch();
   const tripPollQuery = useTripPoll(itineraryId);
   const generateMutation = useGenerateItinerary();
 
-  const fetchTripsData = async () => {
-    const { trips } = await fetchTrips();
-    setTrips(trips);
-    dispatch(setTripsData(trips));
-  };
+  // const fetchTripsData = async () => {
+  //   const { trips } = await fetchTrips();
+  //   setTrips(trips);
+  //   dispatch(setTripsData(trips));
+  // };
 
   useEffect(() => {
-    fetchTripsData();
-  }, []);
+    if (data) {
+      setTrips(data.trips);
+      dispatch(setTripsData(data.trips));
+    }
+  }, [data]);
 
   useEffect(() => {
     if (!itineraryId) return;
@@ -72,6 +78,7 @@ const ItineraryCardWrapper = () => {
           title: "Itinerary Ready!",
           description:
             "Your personalized itinerary has been generated successfully.",
+          duration: 15000,
           closeButton: true,
         });
         break;

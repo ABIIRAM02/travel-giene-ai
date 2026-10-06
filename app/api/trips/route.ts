@@ -69,6 +69,7 @@ export async function GET() {
 
     return NextResponse.json(
       {
+        message: "Sucessfull fetch",
         trips,
       },
       {

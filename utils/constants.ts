@@ -32,16 +32,19 @@ export const PLANNER_FORM_INPUTS = [
     {
         icon:'L',
         label:'destination',
+        name:'destination',
         type:'text'
     },
     {
         icon:'L',
         label:'days',
+        name:'days',
         type:'number'
     },
     {
         icon:'L',
-        label:'budget',
+        label:'budget per person',
+        name:'budget',
         type:'number'
     },
 ]
@@ -64,7 +67,7 @@ export const TRAVEL_STYLE = [
     },
     {
         icon:'L',
-        label:'Food',
+        label:'Relaxed',
         selected: false
     },
     {

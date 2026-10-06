@@ -6,7 +6,7 @@ export const models = {
   fast: google("gemini-3.5-lite"), 
   
   // Updated from 2.5-flash to the recommended 3.6-flash mainline workhorse
-  smart: google("gemini-3.6-flash"), 
+  smart: google("gemini-3.8-flash"), 
   
   // Maintained your current deep reasoning endpoint
   deep: google("gemini-3.7-flash"), 

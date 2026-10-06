@@ -20,7 +20,7 @@ export const PlannerInput = ({
       </div>
       <input
         id={label}
-        className="border border-gray-300 outline-none text rounded-[10px] p-2.5 text-base"
+        className="border border-gray-300 text rounded-[10px] p-2.5 text-base"
         {...registerProps}
       />
       {error && <p className="pl-1 text-sm text-red-500">{error}</p>}
