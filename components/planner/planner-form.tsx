@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { setGenerateItineraryForId } from "@/redux/slices/itinerary.slice";
 import { appToastError } from "@/lib/errors/toast-error";
+import { useGenerateItinerary } from "@/hooks/use-generate-itinerary";
 
 const PlannerForm = () => {
   const {
@@ -46,6 +47,8 @@ const PlannerForm = () => {
   const [travelGroup, setTravelGroup] = useState("");
   const [interests, setInterests] = useState([]);
 
+  const generateMutation = useGenerateItinerary();
+
   const handleTravelStyleCollection = (label: string) => {
     setTravelStyleCollection((prev) =>
       prev.map((style) =>
@@ -61,6 +64,7 @@ const PlannerForm = () => {
       }: any = await generateTrip(data);
       dispatch(setGenerateItineraryForId(id));
       router.push("/dashboard/my-trips");
+      generateMutation.mutate(id);
     } catch (error) {
       appToastError(error);
     }

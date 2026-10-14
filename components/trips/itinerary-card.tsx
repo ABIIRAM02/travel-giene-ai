@@ -4,6 +4,7 @@ import { appToast } from "../ui/toaster";
 import { Trash2 } from "lucide-react";
 import { tripSelect } from "@/utils/types";
 import { useQueryClient } from "@tanstack/react-query";
+import { useGenerateItinerary } from "@/hooks/use-generate-itinerary";
 
 
 interface itineraryProps {
@@ -14,11 +15,16 @@ const ItineraryCard = ({ tripData }: itineraryProps) => {
   const { destination, travelGroup, id, itineraryStatus } = tripData;
   
   const queryClient = useQueryClient();
+  const generateMutation = useGenerateItinerary();
   const router = useRouter();
 
   const handleOpenItinerary = () => {
     router.push(`/dashboard/my-trips/${id}`);
   };
+
+  const handleRetry = () => {
+    generateMutation.mutate(id);
+  }
 
   const handleTripDelete = async () => {
     const { message } = await deleteTripById(id);
@@ -50,8 +56,8 @@ const ItineraryCard = ({ tripData }: itineraryProps) => {
       <div className="h-1/2 border rounded-b-2xl p-4 flex flex-col justify-between">
         <span className="text-center">{travelGroup}</span>
         <button
-          disabled={itineraryStatus !== "COMPLETED"}
-          onClick={handleOpenItinerary}
+          disabled={itineraryStatus !== "COMPLETED" && itineraryStatus !== "FAILED"}
+          onClick={itineraryStatus === "FAILED" ? handleRetry : handleOpenItinerary}
           className="p-3 font-semibold rounded-full w-full bg-secondary cursor-pointer"
         >
           {itineraryStatus === "COMPLETED" ? "Open itinerary" : itineraryStatus}
