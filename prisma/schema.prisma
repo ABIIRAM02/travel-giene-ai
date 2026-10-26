@@ -28,6 +28,12 @@ model Trip {
 
   itinerary Json?
   itineraryStatus ItineraryStatus @default(PENDING)
+
+  thumbnailUrl              String?
+  coverUrl                  String?
+  imageUrl                  String?
+  imagePhotographer         String?
+  imagePhotographerUrl      String?
   
   user        User     @relation(fields: [userId], references: [id])
 }

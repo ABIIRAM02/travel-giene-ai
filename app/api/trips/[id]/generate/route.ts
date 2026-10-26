@@ -43,7 +43,8 @@ export async function POST(
     );
   } catch (error) {
 
-    console.log({error})
+    console.log({error});
+    
     if (userId) {
       try {
         await updateItineraryStatusAsFailed(id, userId);

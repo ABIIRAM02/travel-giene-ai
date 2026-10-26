@@ -14,7 +14,7 @@ export function useGenerateItinerary() {
       await queryClient.cancelQueries({ queryKey });
 
       queryClient.setQueryData(queryKey, {
-        trip: { itineraryStatus: "GENERATING" } 
+        trip: { itineraryStatus: "PENDING" } 
       });
     },
     onError: (err, tripId) => {

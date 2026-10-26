@@ -29,7 +29,7 @@ export const itinerarySchema = z.object({
           title: z.string(),
           description: z.string(),
           location: z.string(),
-          type: z.enum(["sight", "food", "activity"]),
+          type: z.enum(["sight", "food", "activity", "stay", "travel"]),
           fee: z.number().nonnegative(),
         }),
       ),

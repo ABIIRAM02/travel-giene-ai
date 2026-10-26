@@ -1,6 +1,7 @@
 import { AppError } from "@/lib/errors/app-error";
 import { formatZodErrors } from "@/lib/validation";
-import { createTrip, getTrips } from "@/services/server/trip.service";
+import { createTrip, getTrips, updateTrip } from "@/services/server/trip.service";
+import { getDestinationPhotos } from "@/services/server/unsplash.service";
 import { getAuthenticatedUserId } from "@/utils/auth-check";
 import { tripSchema } from "@/validators/trip.schema";
 import { NextRequest, NextResponse } from "next/server";
@@ -27,17 +28,28 @@ export async function POST(request: NextRequest) {
 
     const trip = await createTrip(validationResult.data, userId);
 
-    const response = NextResponse.json(
+    let updatedTrip = trip;
+
+    try {
+      const imageData = await getDestinationPhotos(trip.destination);
+
+      if (imageData) {
+        updatedTrip = await updateTrip(trip.id, userId, imageData);
+      }
+    } catch (error) {
+      console.error("Failed to fetch or save destination image:", error);
+    }
+
+    return NextResponse.json(
       {
-        message: "Trip created sucessfully",
-        trip,
+        message: "Trip created successfully",
+        trip: updatedTrip,
       },
       {
         status: 201,
       },
     );
 
-    return response;
   } catch (error) {
     if (error instanceof AppError) {
       return NextResponse.json(
@@ -78,7 +90,6 @@ export async function GET() {
     );
   } catch (error) {
     if (error instanceof AppError) {
-      console.log({error})
       return NextResponse.json(
         {
           message: error.message,

@@ -1,6 +1,5 @@
 import { Itinerary } from "@/validators/itinerary.schema";
 
-
 export type tripSelect = {
   id: string;
   destination: string;
@@ -12,8 +11,13 @@ export type tripSelect = {
   userId: string;
   createdAt: string;
   updatedAt: string;
-  itineraryStatus: string
-  itinerary: Itinerary
+  itineraryStatus: string;
+  itinerary: Itinerary;
+  thumbnailUrl: string;
+  coverUrl: string;
+  imageUrl: string;
+  imagePhotographer: string;
+  imagePhotographerUrl: string;
 };
 
 export interface tripResponse {

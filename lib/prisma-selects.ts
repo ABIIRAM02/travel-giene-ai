@@ -18,5 +18,10 @@ export const tripSelect = {
   createdAt: true,
   updatedAt: true,
   itineraryStatus: true,
-  itinerary: true
+  itinerary: true,
+  thumbnailUrl: true,
+  coverUrl: true,
+  imageUrl: true,
+  imagePhotographer: true,
+  imagePhotographerUrl: true
 };

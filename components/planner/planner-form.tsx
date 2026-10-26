@@ -25,6 +25,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { setGenerateItineraryForId } from "@/redux/slices/itinerary.slice";
 import { appToastError } from "@/lib/errors/toast-error";
 import { useGenerateItinerary } from "@/hooks/use-generate-itinerary";
+import { Sparkles } from "lucide-react";
 
 const PlannerForm = () => {
   const {
@@ -195,7 +196,8 @@ const PlannerForm = () => {
           disabled={isSubmitting}
           type="submit"
           classname="py-4 px-8 text-base"
-          option={{ icon: "L", name: "Generate Trip" }}
+          option={{ icon: Sparkles, name: "Generate Trip" }}
+          isBig={true}
         />
       </form>
     </section>
