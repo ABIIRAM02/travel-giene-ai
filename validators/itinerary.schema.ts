@@ -21,6 +21,7 @@ export const itinerarySchema = z.object({
   days: z.array(
     z.object({
       day: z.number(),
+      date: z.iso.date(),
       title: z.string(),
       spots: z.array(
         z.object({

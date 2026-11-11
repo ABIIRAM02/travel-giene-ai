@@ -22,7 +22,6 @@ const ItineraryBanner = ({ tripData }: any) => {
     itinerary,
   } = tripData;
 
-  console.log({ tripData });
   const InfoItem = () => {
     const infoItemData = [
       {

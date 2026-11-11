@@ -42,12 +42,6 @@ export const PLANNER_FORM_INPUTS = [
         name:'days',
         type:'number'
     },
-    {
-        icon:'L',
-        label:'budget per person',
-        name:'budget',
-        type:'number'
-    },
 ]
 
 export const TRAVEL_STYLE = [

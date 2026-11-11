@@ -37,14 +37,14 @@ const ItineraryCard = ({ tripData }: itineraryProps) => {
   };
 
   return (
-    <section className="w-full shrink-0 rounded-2xl flex flex-col h-80 hover-lift md:w-[calc((100%-3rem)/3)] border border-border bg-card ">
+    <section className="w-full shrink-0 rounded-2xl flex flex-col h-80 hover-lift md:w-[calc((100%-3rem)/3)] border border-border bg-card group ">
       <div className="h-48 border rounded-t-2xl relative bg-sidebar-accent overflow-hidden">
       <div className="absolute z-2 h-full w-full bg-linear-to-t from-black/55 via-black/10 to-transparent"/>
         <Image
           src={imageData.thumbnailUrl}
           alt={`${destination} image`}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes="calc((100% - 3rem) / 3)"
         />
         <div className="absolute right-5 top-5 z-10">

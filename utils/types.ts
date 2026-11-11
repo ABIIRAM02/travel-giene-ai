@@ -18,6 +18,10 @@ export type tripSelect = {
   imageUrl: string;
   imagePhotographer: string;
   imagePhotographerUrl: string;
+  travelers: number;
+  startDate: string;
+  arrivalTime: string;
+  departureTime: string;
 };
 
 export interface tripResponse {
@@ -29,3 +33,29 @@ export interface tripsResponse {
   message: string;
   trips: tripSelect[];
 }
+
+export type PlaceCandidate = {
+  id: string;
+  latitude: number;
+  longitude: number;
+  tags: Record<string, string>;
+};
+
+export type SourceResult = {
+  candidates: PlaceCandidate[];
+  complete: boolean;
+};
+
+export type LivePlace = {
+  id: string;
+  name: string;
+  category: string;
+  latitude: number;
+  longitude: number;
+  description?: string;
+  website?: string;
+  wikidata?: string;
+  wikipedia?: string;
+  openingHours?: string;
+};
+

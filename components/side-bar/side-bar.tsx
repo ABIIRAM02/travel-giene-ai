@@ -97,7 +97,7 @@ const Sidebar = () => {
         <h2>TravelGenie</h2>
         <span>AI</span>
       </div>
-      <p className="uppercase font-semibold text-[11px] px-7 pt-6 pb-3 text-gray-500">
+      <p className="uppercase font-semibold text-[11px] px-9 tracking-widest pt-6 pb-3 text-gray-500">
         Workspace
       </p>
       <div className="flex flex-col justify-between">

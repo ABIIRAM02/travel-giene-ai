@@ -1,4 +1,3 @@
-
 import { Itinerary } from "@/validators/itinerary.schema";
 
 type TripDetails = {

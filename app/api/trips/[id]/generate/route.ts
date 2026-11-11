@@ -7,6 +7,7 @@ import {
   updateItineraryStatusAsGenerating,
 } from "@/services/server/itinerary.service";
 import { getAuthenticatedUserId } from "@/utils/auth-check";
+import { Itinerary } from "@/validators/itinerary.schema";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -20,7 +21,7 @@ export async function POST(
   try {
     userId = await getAuthenticatedUserId();
 
-    const tripData = await updateItineraryStatusAsGenerating(id, userId);
+    const tripData:any = await updateItineraryStatusAsGenerating(id, userId);
 
     const itinerary = await generateItinerary(tripData);
 

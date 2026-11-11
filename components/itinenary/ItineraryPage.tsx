@@ -8,6 +8,7 @@ import GradintWrapper from "../ui/gradient-wrapper";
 import { Progress, ProgressLabel, ProgressValue } from "../ui/progress";
 import { appToastError } from "@/lib/errors/toast-error";
 import { Bed, Landmark, Plane, Sparkles, Ticket, UtensilsCrossed } from "lucide-react";
+import { formatTime } from "@/utils/format-time";
 
 export const Container = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -67,7 +68,7 @@ const ItineraryPage = () => {
     const fetchTrip = async () => {
       try {
         const { trip } = await fetchTripById(id as string);
-        const spotsCount = trip?.itinerary.days.reduce(
+        const spotsCount = trip?.itinerary?.days.reduce(
           (acc: number, day: any) => {
             return acc + day.spots.length;
           },
@@ -118,9 +119,9 @@ const ItineraryPage = () => {
               {day.spots.map((spot: any) => (
                 <section className="pl-5 flex flex-col mt-5">
                   <section className="flex gap-5 items-center">
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 w-15 ">
                       <h5 className="text-xs font-semibold tabular-nums">
-                        {spot.time}
+                        {formatTime(spot.time)}
                       </h5>
                       <span className="text-[11px] text-muted-foreground capitalize">
                         {spot.type}
