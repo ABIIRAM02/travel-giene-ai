@@ -1,29 +1,30 @@
+import { CreditCard, Gem, HeartPlus, LayoutDashboard, Mountain, Parasol, Plane, RockingChair, Sparkles, Store, TreePine, UserRoundPen } from "lucide-react";
 
 export const authRoute = ["/login", "/register"];
 
 export const SIDE_BAR_OPTIONS = [
     {
-        icon:'L',
+        icon: LayoutDashboard,
         name:'Dashboard'
     },
     {
-        icon:'L',
+        icon: Plane,
         name:'My Trips'
     },
     {
-        icon:'L',
+        icon: Sparkles,
         name:'AI Planner'
     },
     {
-        icon:'L',
+        icon: HeartPlus,
         name:'Favourites'
     },
     {
-        icon:'L',
+        icon: CreditCard,
         name:'Billing'
     },
     {
-        icon:'L',
+        icon: UserRoundPen,
         name:'Profile'
     },
 ]
@@ -32,48 +33,45 @@ export const PLANNER_FORM_INPUTS = [
     {
         icon:'L',
         label:'destination',
+        name:'destination',
         type:'text'
     },
     {
         icon:'L',
         label:'days',
-        type:'number'
-    },
-    {
-        icon:'L',
-        label:'budget',
+        name:'days',
         type:'number'
     },
 ]
 
 export const TRAVEL_STYLE = [
     {
-        icon:'L',
+        icon: Mountain,
         label:'Adventure',
         selected: false
     },
     {
-        icon:'L',
+        icon: TreePine,
         label:'Nature',
         selected: false
     },
     {
-        icon:'L',
+        icon: Gem,
         label:'Luxury',
         selected: false
     },
     {
-        icon:'L',
-        label:'Food',
+        icon: RockingChair,
+        label:'Relaxed',
         selected: false
     },
     {
-        icon:'L',
+        icon: Store,
         label:'Culture',
         selected: false
     },
     {
-        icon:'L',
+        icon: Parasol,
         label:'Beaches',
         selected: false
     },

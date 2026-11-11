@@ -19,17 +19,30 @@ model Trip {
   destination String
   days        Int
   budget      Float
+
+  startDate     String
+  travelers     Int?
+  arrivalTime   String?
+  departureTime String?
+
   travelStyle String[] @default([])
   travelGroup String
   interests   String[] @default([])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  userId      String
 
-  itinerary Json?
-  itineraryStatus ItineraryStatus @default(PENDING)
-  
-  user        User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+
+  itinerary        Json?
+  itineraryStatus  ItineraryStatus @default(PENDING)
+
+  thumbnailUrl        String?
+  coverUrl            String?
+  imageUrl            String?
+  imagePhotographer   String?
+  imagePhotographerUrl String?
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model User {

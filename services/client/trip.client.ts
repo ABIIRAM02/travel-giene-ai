@@ -1,31 +1,7 @@
 import { api } from "@/utils/api";
-import { Itinerary } from "@/validators/itinerary.schema";
+import { tripResponse, tripsResponse } from "@/utils/types";
 import { TripInput } from "@/validators/trip.schema";
 
-export type tripSelect = {
-  id: string;
-  destination: string;
-  days: number;
-  budget: number;
-  travelStyle: string[];
-  travelGroup: string;
-  interests: string[];
-  userId: string;
-  createdAt: string;
-  updatedAt: string;
-  itineraryStatus: string
-  itinerary: Itinerary
-};
-
-interface tripResponse {
-  message: string;
-  trip: tripSelect;
-}
-
-interface tripsResponse {
-  message: string;
-  trips: tripSelect[];
-}
 
 export async function generateTrip(data: TripInput) {
   return api<tripResponse>("/api/trips", {
@@ -39,8 +15,15 @@ export async function fetchTrips() {
     method: "GET",
   });
 }
+
 export async function fetchTripById(id:string) {
   return api<tripResponse>(`/api/trips/${id}`, {
     method: "GET",
+  });
+}
+
+export async function deleteTripById(id:string) {
+  return api<tripResponse>(`/api/trips/${id}`, {
+    method: "DELETE",
   });
 }

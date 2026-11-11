@@ -1,5 +1,4 @@
 
-import { tripSelect } from "@/services/client/trip.client";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface inineraryState {

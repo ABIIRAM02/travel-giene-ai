@@ -6,13 +6,49 @@ import { useEffect, useState } from "react";
 import ItineraryBanner from "./itinerary-banner";
 import GradintWrapper from "../ui/gradient-wrapper";
 import { Progress, ProgressLabel, ProgressValue } from "../ui/progress";
-import { appToast } from "../ui/toaster";
 import { appToastError } from "@/lib/errors/toast-error";
+import { Bed, Landmark, Plane, Sparkles, Ticket, UtensilsCrossed } from "lucide-react";
+import { formatTime } from "@/utils/format-time";
 
 export const Container = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="shadow-sm rounded-2xl border border-border bg-card p-6">
       {children}
+    </div>
+  );
+};
+
+const Icon = ({ type }: { type: string }) => {
+  let IconType;
+
+  switch (type) {
+    case "stay": {
+      IconType = <Bed />;
+      break;
+    }
+    case "travel": {
+      IconType = <Plane />;
+      break;
+    }
+    case "food": {
+      IconType = <UtensilsCrossed />;
+      break;
+    }
+    case "activity": {
+      IconType = <Ticket />;
+      break;
+    }
+    case "sight": {
+      IconType = <Landmark />;
+      break;
+    }
+    default:
+      IconType = <Landmark />;
+  }
+
+  return (
+    <div className="h-4 text-primary flex items-center justify-center w-4">
+      {IconType}
     </div>
   );
 };
@@ -32,7 +68,7 @@ const ItineraryPage = () => {
     const fetchTrip = async () => {
       try {
         const { trip } = await fetchTripById(id as string);
-        const spotsCount = trip?.itinerary.days.reduce(
+        const spotsCount = trip?.itinerary?.days.reduce(
           (acc: number, day: any) => {
             return acc + day.spots.length;
           },
@@ -55,12 +91,7 @@ const ItineraryPage = () => {
         Back to trips
       </button>
 
-      <ItineraryBanner
-        spotsCount={tripData.spotsCount}
-        days={tripData.days}
-        budget={tripData.budget}
-        travelGroup={tripData.travelGroup}
-      />
+      <ItineraryBanner tripData={tripData} />
 
       <section className="flex gap-6 mt-8">
         <section className="flex flex-col gap-6 flex-1">
@@ -88,16 +119,18 @@ const ItineraryPage = () => {
               {day.spots.map((spot: any) => (
                 <section className="pl-5 flex flex-col mt-5">
                   <section className="flex gap-5 items-center">
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 w-15 ">
                       <h5 className="text-xs font-semibold tabular-nums">
-                        {spot.time}
+                        {formatTime(spot.time)}
                       </h5>
                       <span className="text-[11px] text-muted-foreground capitalize">
                         {spot.type}
                       </span>
                     </div>
 
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent"></div>
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent mt-2">
+                      <Icon type={spot.type} />
+                    </div>
 
                     <div className="flex-1">
                       <h5 className="font-semibold text-primary">
@@ -150,7 +183,7 @@ const ItineraryPage = () => {
             </span>
             <GradintWrapper
               classname="text-xs shadow-glow justify-center mt-3"
-              option={{ name: "Refine this itinerary" }}
+              option={{ name: "Refine this itinerary", icon: Sparkles }}
             />
           </section>
         </section>

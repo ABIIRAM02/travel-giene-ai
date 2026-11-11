@@ -1,5 +1,6 @@
 "use client";
 
+import { appToastError } from "@/lib/errors/toast-error";
 import { useAppDispatch } from "@/redux/hooks";
 import { clearUser } from "@/redux/slices/auth.slice";
 import { logout } from "@/services/client/auth.client";
@@ -33,10 +34,7 @@ const Navbar = ({ isRegister = false, isLandingPage = false }: registerProp) => 
 
       router.replace("/login");
     } catch (error) {
-      console.error({ logoutError: error });
-
-      // Later:
-      // toast.error("Unable to log out. Please try again.");
+      appToastError(error)
     }
   };
 

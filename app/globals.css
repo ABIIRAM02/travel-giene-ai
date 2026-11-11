@@ -8,8 +8,8 @@
 @theme {
   --font-inter: var(--font-inter);
   --font-poppins: var(--font-poppins);
-  --text-xs: 0.8000rem; /* 13px */
-  --text-sm: 15px; 
+  --text-xs: 0.8rem; /* 13px */
+  --text-sm: 15px;
   --text-xs--line-height: 1.25rem;
 }
 
@@ -21,7 +21,9 @@
   --radius-2xl: 24px;
   --radius-3xl: 32px;
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
   --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   --color-background: var(--background);
@@ -81,7 +83,7 @@
   --primary: oklch(0.552 0.208 262);
   --primary-foreground: oklch(0.99 0 0);
   --primary-glow: oklch(0.68 0.18 258);
-  --primary-icon-background: oklch(95.5% .03 258);
+  --primary-icon-background: oklch(95.5% 0.03 258);
 
   --secondary: oklch(0.97 0.008 250);
   --secondary-foreground: oklch(0.22 0.03 260);
@@ -115,19 +117,50 @@
   --sidebar-ring: oklch(0.552 0.208 262);
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, oklch(0.552 0.208 262) 0%, oklch(0.68 0.18 258) 100%);
-  --gradient-subtle: linear-gradient(180deg, oklch(0.995 0.003 240) 0%, oklch(0.97 0.02 258) 100%);
-  --gradient-hero: radial-gradient(1200px 600px at 15% -10%, oklch(0.92 0.08 258 / 0.6), transparent 60%),
-                   radial-gradient(1000px 500px at 90% 10%, oklch(0.9 0.09 220 / 0.5), transparent 60%),
-                   linear-gradient(180deg, oklch(0.995 0.003 240), oklch(1 0 0));
-  --gradient-mesh: radial-gradient(600px 300px at 20% 20%, oklch(0.85 0.12 262 / 0.35), transparent 70%),
-                   radial-gradient(500px 300px at 80% 60%, oklch(0.88 0.1 200 / 0.35), transparent 70%);
+  --gradient-primary: linear-gradient(
+    135deg,
+    oklch(0.552 0.208 262) 0%,
+    oklch(0.68 0.18 258) 100%
+  );
+  --gradient-subtle: linear-gradient(
+    180deg,
+    oklch(0.995 0.003 240) 0%,
+    oklch(0.97 0.02 258) 100%
+  );
+  --gradient-hero:
+    radial-gradient(
+      1200px 600px at 15% -10%,
+      oklch(0.92 0.08 258 / 0.6),
+      transparent 60%
+    ),
+    radial-gradient(
+      1000px 500px at 90% 10%,
+      oklch(0.9 0.09 220 / 0.5),
+      transparent 60%
+    ),
+    linear-gradient(180deg, oklch(0.995 0.003 240), oklch(1 0 0));
+  --gradient-mesh:
+    radial-gradient(
+      600px 300px at 20% 20%,
+      oklch(0.85 0.12 262 / 0.35),
+      transparent 70%
+    ),
+    radial-gradient(
+      500px 300px at 80% 60%,
+      oklch(0.88 0.1 200 / 0.35),
+      transparent 70%
+    );
 
   /* Shadows — soft, Apple-inspired */
   --shadow-xs: 0 1px 2px oklch(0.2 0.05 260 / 0.04);
-  --shadow-sm: 0 2px 6px oklch(0.2 0.05 260 / 0.05), 0 1px 2px oklch(0.2 0.05 260 / 0.04);
-  --shadow-md: 0 8px 24px -8px oklch(0.2 0.05 260 / 0.10), 0 2px 6px oklch(0.2 0.05 260 / 0.05);
-  --shadow-lg: 0 20px 45px -15px oklch(0.2 0.05 260 / 0.18), 0 8px 16px -8px oklch(0.2 0.05 260 / 0.08);
+  --shadow-sm:
+    0 2px 6px oklch(0.2 0.05 260 / 0.05), 0 1px 2px oklch(0.2 0.05 260 / 0.04);
+  --shadow-md:
+    0 8px 24px -8px oklch(0.2 0.05 260 / 0.1),
+    0 2px 6px oklch(0.2 0.05 260 / 0.05);
+  --shadow-lg:
+    0 20px 45px -15px oklch(0.2 0.05 260 / 0.18),
+    0 8px 16px -8px oklch(0.2 0.05 260 / 0.08);
   --shadow-glow: 0 20px 60px -20px oklch(0.552 0.208 262 / 0.45);
 }
 
@@ -153,8 +186,6 @@
   --ring: oklch(0.68 0.18 258);
 }
 
-
-
 @layer base {
   * {
     border-color: var(--color-border);
@@ -172,9 +203,16 @@
     color: var(--color-foreground);
     font-feature-settings: "cv11", "ss01", "ss03";
     letter-spacing: -0.011em;
+
+    *:focus {
+      outline-color: var(--color-primary);
+    }
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     @apply font-poppins;
     letter-spacing: -0.028em;
     font-weight: 600;
