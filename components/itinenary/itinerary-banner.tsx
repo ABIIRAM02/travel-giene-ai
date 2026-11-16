@@ -70,6 +70,8 @@ const ItineraryBanner = ({ tripData }: any) => {
     );
   };
 
+  if(!travelGroup) return;
+
   return (
     <section className="mt-4 overflow-hidden h-96 w-full rounded-2xl border border-border shadow-sm flex flex-col">
       <div className="flex-1 relative">

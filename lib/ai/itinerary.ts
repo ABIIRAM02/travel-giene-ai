@@ -6,7 +6,8 @@ import { models } from "./provider";
 import { itinerarySchema } from "@/validators/itinerary.schema";
 import { getDestinationCoordinates } from "../live-data/geo-coding";
 import { getLivePlaces } from "../live-data/places";
-import { LivePlace, tripSelect } from "@/utils/types";
+import { LivePlace, tripSelect, WeatherForecastResult } from "@/utils/types";
+import { getWeatherForecast } from "../live-data/weather";
 
 export async function generateItinerary(trip: tripSelect) {
   const routeEstimationTool = tool({
@@ -66,15 +67,31 @@ export async function generateItinerary(trip: tripSelect) {
   });
 
   let livePlaces: LivePlace[] = [];
+  let weatherData: WeatherForecastResult | undefined;
 
   try {
     const { latitude, longitude } = await getDestinationCoordinates(
       trip.destination,
     );
 
-    livePlaces = await getLivePlaces(latitude, longitude, 30);
+    const [weatherResult, placesResult] = await Promise.allSettled([
+      getWeatherForecast(latitude, longitude, trip.startDate, trip.days),
+      getLivePlaces(latitude, longitude, 30),
+    ]);
+
+    if (weatherResult.status === "fulfilled") {
+      weatherData = weatherResult.value;
+    } else {
+      console.error("[Weather] Failed:", weatherResult.reason);
+    }
+
+    if (placesResult.status === "fulfilled") {
+      livePlaces = placesResult.value;
+    } else {
+      console.error("[Places] Failed:", placesResult.reason);
+    }
   } catch (error) {
-    console.error("Live place discovery failed:", error);
+    console.error(error);
   }
 
   const placesContext = livePlaces.map(
@@ -87,6 +104,16 @@ export async function generateItinerary(trip: tripSelect) {
       openingHours,
     }),
   );
+
+  const weatherContext = weatherData
+    ? {
+        status: weatherData.status,
+        days: weatherData.days,
+      }
+    : {
+        status: "unavailable",
+        days: [],
+      };
 
   console.log({ placesContext });
 
@@ -104,7 +131,11 @@ export async function generateItinerary(trip: tripSelect) {
     prepareStep: ({ stepNumber }) => {
       if (stepNumber === 0) {
         return {
-          toolChoice: "required",
+          toolChoice: {
+            type: "tool",
+            toolName: "getRouteEstimates",
+            toolChoice: "required",
+          },
         };
       }
 
@@ -293,5 +324,8 @@ OUTPUT REQUIREMENTS
 `,
   });
 
-  return output;
+  return {
+    itinerary: output,
+    weather: weatherContext,
+  };
 }

@@ -23,7 +23,7 @@ export async function getDestinationCoordinates(
     headers: {
       "User-Agent": "TripGenie/1.0",
     },
-    signal: AbortSignal.timeout(10_000),
+    signal: AbortSignal.timeout(15000),
     cache: "no-store",
   });
 

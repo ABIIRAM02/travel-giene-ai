@@ -19,6 +19,7 @@ export const tripSelect = {
   updatedAt: true,
   itineraryStatus: true,
   itinerary: true,
+  weather: true,
   startDate: true,
   travelers: true,
   arrivalTime: true,

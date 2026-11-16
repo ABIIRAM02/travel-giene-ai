@@ -1,6 +1,7 @@
 import { ConflictError } from "@/lib/errors/conflict-error";
 import { NotFoundError } from "@/lib/errors/not-found-error";
 import { prisma } from "@/lib/prisma";
+import { WeatherForecastResult } from "@/utils/types";
 import { Itinerary } from "@/validators/itinerary.schema";
 
 export async function updateItineraryStatusAsGenerating(
@@ -48,6 +49,7 @@ export async function updateItinerary(
   tripId: string,
   userId: string,
   itinerary: Itinerary,
+  weather: WeatherForecastResult,
 ) {
   const trip = await prisma.trip.findFirst({
     where: {
@@ -65,6 +67,7 @@ export async function updateItinerary(
       id: tripId,
     },
     data: {
+      weather,
       itinerary,
       itineraryStatus: "COMPLETED",
     },

@@ -7,7 +7,6 @@ import {
   updateItineraryStatusAsGenerating,
 } from "@/services/server/itinerary.service";
 import { getAuthenticatedUserId } from "@/utils/auth-check";
-import { Itinerary } from "@/validators/itinerary.schema";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -21,31 +20,32 @@ export async function POST(
   try {
     userId = await getAuthenticatedUserId();
 
-    const tripData:any = await updateItineraryStatusAsGenerating(id, userId);
+    const tripData: any = await updateItineraryStatusAsGenerating(id, userId);
 
-    const itinerary = await generateItinerary(tripData);
+    const { itinerary, weather } =
+      await generateItinerary(tripData);
 
-    const itineraryValidation = validateGeneratedItinerary(itinerary, tripData) 
+    const itineraryValidation = validateGeneratedItinerary(itinerary, tripData);
 
-    if(!itineraryValidation.valid){
-      throw new Error(itineraryValidation.errors.join(", "))
+    if (!itineraryValidation.valid) {
+      throw new Error(itineraryValidation.errors.join(", "));
     }
 
-    await updateItinerary(id, userId, itinerary);
+    await updateItinerary(id, userId, itinerary, weather);
 
     return NextResponse.json(
       {
         message: "Itinerary generated successfully",
         itinerary,
+        weather,
       },
       {
         status: 200,
       },
     );
   } catch (error) {
+    console.log({ error });
 
-    console.log({error});
-    
     if (userId) {
       try {
         await updateItineraryStatusAsFailed(id, userId);

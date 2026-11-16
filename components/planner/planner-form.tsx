@@ -184,7 +184,7 @@ const PlannerForm = () => {
           </div>
         </div>
 
-        <div className="flex gap-5 w-full">
+        <div className="flex gap-5 w-full justify-between">
           <div className="w-1/3">
             <div className="flex items-center gap-2 flex-row-reverse">
               <Controller

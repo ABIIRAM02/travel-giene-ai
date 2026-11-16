@@ -34,6 +34,7 @@ model Trip {
   userId    String
 
   itinerary        Json?
+  weather          Json?
   itineraryStatus  ItineraryStatus @default(PENDING)
 
   thumbnailUrl        String?

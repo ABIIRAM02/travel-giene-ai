@@ -12,7 +12,8 @@ export type tripSelect = {
   createdAt: string;
   updatedAt: string;
   itineraryStatus: string;
-  itinerary: Itinerary;
+  itinerary?: Itinerary;
+  weather?: WeatherForecastResult;
   thumbnailUrl: string;
   coverUrl: string;
   imageUrl: string;
@@ -59,3 +60,16 @@ export type LivePlace = {
   openingHours?: string;
 };
 
+export type WeatherForecastDay = {
+  date: string;
+  dayOfWeek: string;
+  temperatureMax: number;
+  temperatureMin: number;
+  condition: string;
+};
+
+export type WeatherForecastResult = {
+  status: string;
+  days: WeatherForecastDay[];
+  message?: string;
+};

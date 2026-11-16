@@ -36,6 +36,8 @@ const ItineraryCard = ({ tripData }: itineraryProps) => {
     });
   };
 
+  if(!imageData.thumbnailUrl) return;
+
   return (
     <section className="w-full shrink-0 rounded-2xl flex flex-col h-80 hover-lift md:w-[calc((100%-3rem)/3)] border border-border bg-card group ">
       <div className="h-48 border rounded-t-2xl relative bg-sidebar-accent overflow-hidden">
