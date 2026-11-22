@@ -1,4 +1,4 @@
-import { tripSelect } from "@/services/client/trip.client";
+import { tripSelect } from "@/utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface tripsState {

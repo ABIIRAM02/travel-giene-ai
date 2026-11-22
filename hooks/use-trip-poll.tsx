@@ -1,16 +1,22 @@
 
 "use client";
 
+import { useAppSelector } from "@/redux/hooks";
 import { fetchTripById } from "@/services/client/trip.client";
 import { useQuery } from "@tanstack/react-query";
 
-export function useTripPoll(tripId: string | null) {
+export function useTripPoll() {
+
+  const itineraryId = useAppSelector(
+    (state) => state.itinerary.generateItineraryForId,
+  );
+
   return useQuery({
-    queryKey: ["trip", tripId],
+    queryKey: ["trip", itineraryId],
 
-    queryFn: () => fetchTripById(tripId!),
+    queryFn: () => fetchTripById(itineraryId!),
 
-    enabled: !!tripId,
+    enabled: !!itineraryId,
 
     refetchInterval: (query) => {
       const status = query.state.data?.trip?.itineraryStatus;

@@ -1,4 +1,5 @@
 import { generateItinerary } from "@/lib/ai/itinerary";
+import { validateGeneratedItinerary } from "@/lib/ai/validate-itinerary";
 import { AppError } from "@/lib/errors/app-error";
 import {
   updateItinerary,
@@ -19,22 +20,32 @@ export async function POST(
   try {
     userId = await getAuthenticatedUserId();
 
-    const tripData = await updateItineraryStatusAsGenerating(id, userId);
+    const tripData: any = await updateItineraryStatusAsGenerating(id, userId);
 
-    const itinerary = await generateItinerary(tripData);
+    const { itinerary, weather } =
+      await generateItinerary(tripData);
 
-    await updateItinerary(id, userId, itinerary);
+    const itineraryValidation = validateGeneratedItinerary(itinerary, tripData);
+
+    if (!itineraryValidation.valid) {
+      throw new Error(itineraryValidation.errors.join(", "));
+    }
+
+    await updateItinerary(id, userId, itinerary, weather);
 
     return NextResponse.json(
       {
         message: "Itinerary generated successfully",
         itinerary,
+        weather,
       },
       {
         status: 200,
       },
     );
   } catch (error) {
+    console.log({ error });
+
     if (userId) {
       try {
         await updateItineraryStatusAsFailed(id, userId);

@@ -18,6 +18,7 @@ export async function GET(
 
     return NextResponse.json(
       {
+        message: "Sucessfull fetch",
         trip,
       },
       {
@@ -85,6 +86,7 @@ export async function PATCH(
 
     return NextResponse.json(
       {
+        message: "Trip updated sucessfully",
         updatedTrip,
       },
       {

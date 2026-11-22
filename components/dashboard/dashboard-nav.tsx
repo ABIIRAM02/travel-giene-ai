@@ -7,7 +7,7 @@ const DashboardNav = () => {
   const user = useAppSelector((state) => state.auth.user);
 
   return (
-    <main className="px-5 py-2 flex justify-between items-center border h-16 fixed w-[calc(100%-100%/6)] top-0 bg-background/85 backdrop-blur-xl z-10">
+    <main className="px-5 py-2 flex justify-between items-center border h-16 fixed w-[calc(100%-100%/6)] top-0 bg-background/85 backdrop-blur-xl z-20">
       <h4>Dashboard</h4>
       <div className="flex-1">
         <div className="rounded-full flex w-3/5 px-2 items-center gap-3 border mx-auto">

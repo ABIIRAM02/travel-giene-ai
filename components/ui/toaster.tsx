@@ -107,7 +107,7 @@ function ToastContent({
 function showAppToast(variant: AppToastVariant, options: AppToastOptions) {
   return toast.custom(
     (toastId) => <ToastContent variant={variant} options={options} toastId={toastId} />,
-    { duration: options.duration ?? 5000 },
+    { duration: options.duration ?? 8000 },
   );
 }
 
