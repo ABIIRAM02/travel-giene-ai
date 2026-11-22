@@ -1,4 +1,4 @@
-import { LivePlace } from "./types";
+import { LivePlace } from "@/utils/types";
 
 
 const EXCLUDED_NAME_KEYWORDS = [

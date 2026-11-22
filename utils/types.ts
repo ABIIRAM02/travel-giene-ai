@@ -60,6 +60,30 @@ export type LivePlace = {
   openingHours?: string;
 };
 
+export type RouteStop = {
+  name: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type RouteLeg = {
+  from: string;
+  to: string;
+  distanceKm: number;
+  durationMinutes: number;
+};
+
+export type OsrmMultiRouteResponse = {
+  code: string;
+  routes: {
+    legs: {
+      distance: number;
+      duration: number;
+    }[];
+  }[];
+};
+
+
 export type WeatherForecastDay = {
   date: string;
   dayOfWeek: string;

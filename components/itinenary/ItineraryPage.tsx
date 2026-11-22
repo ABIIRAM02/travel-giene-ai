@@ -2,13 +2,27 @@
 
 import { fetchTripById } from "@/services/client/trip.client";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ItineraryBanner from "./itinerary-banner";
 import GradintWrapper from "../ui/gradient-wrapper";
 import { Progress, ProgressLabel, ProgressValue } from "../ui/progress";
 import { appToastError } from "@/lib/errors/toast-error";
-import { Bed, Landmark, Plane, Sparkles, Ticket, UtensilsCrossed } from "lucide-react";
+import {
+  ArrowLeft,
+  Bed,
+  CloudSun,
+  Landmark,
+  MoveLeft,
+  Plane,
+  Sparkles,
+  Ticket,
+  UtensilsCrossed,
+} from "lucide-react";
 import { formatTime } from "@/utils/format-time";
+import { IconWrapper } from "../ui/icon-wrapper";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "../ui/button";
+import WeatherSliderCard from "./weather-slider";
 
 export const Container = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -56,6 +70,7 @@ const Icon = ({ type }: { type: string }) => {
 const ItineraryPage = () => {
   const { id } = useParams();
   const router = useRouter();
+  const sliderRef: any = useRef(null);
   const [tripData, setTripData] = useState<any>({});
 
   const handleBackClick = () => {
@@ -83,12 +98,25 @@ const ItineraryPage = () => {
     fetchTrip();
   }, [id]);
 
+  const handlePrevWeatherCard = () => {
+    sliderRef.current.prevSlide();
+  };
+
+  const handleNextWeatherCard = () => {
+    sliderRef.current.nextSlide();
+  };
+
   if (tripData?.itineraryStatus !== "COMPLETED") return;
 
   return (
     <main>
-      <button className="my-2 cursor-pointer" onClick={handleBackClick}>
-        Back to trips
+      <button className="ml-3 inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground active cursor-pointer" onClick={handleBackClick}>
+        <IconWrapper IconName={ArrowLeft} style={{
+          color:"var(--muted-foreground)",
+          height:"15px",
+          width:"15px"
+        }} />
+        My Trips
       </button>
 
       <ItineraryBanner tripData={tripData} />
@@ -174,6 +202,51 @@ const ItineraryPage = () => {
               )}
             </div>
           </Container>
+
+          {tripData.weather && (
+            <Container>
+              <section className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <IconWrapper IconName={CloudSun} />
+                  <h2 className="leading-snug">Weather</h2>
+                </div>
+
+                <div className="flex justify-end gap-1">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-xs"
+                    aria-label="Previous slide"
+                    onClick={handlePrevWeatherCard}
+                    className="cursor-pointer"
+                  >
+                    <ChevronLeft aria-hidden="true" />
+                  </Button>
+
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-xs"
+                    aria-label="Next slide"
+                    onClick={handleNextWeatherCard}
+                    className="cursor-pointer"
+                  >
+                    <ChevronRight aria-hidden="true" />
+                  </Button>
+                </div>
+              </section>
+
+              <WeatherSliderCard
+                tripId={tripData.id}
+                sliderRef={sliderRef}
+                weatherDays={tripData.weather.days}
+                destination={tripData.destination}
+                startDate={tripData.startDate}
+                days={tripData.days}
+              />
+
+            </Container>
+          )}
 
           <section className="flex flex-col gap-1 p-6">
             <h4 className="font-semibold">Ask TravelGenie</h4>

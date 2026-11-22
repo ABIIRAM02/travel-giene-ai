@@ -1,7 +1,9 @@
+"use server";
+
+import { getTodayIST } from "@/utils/helpers";
 import { WeatherForecastDay, WeatherForecastResult } from "@/utils/types";
 
 function getWeatherCondition(code: number): string {
-
   const weatherConditions: Record<number, string> = {
     0: "Clear sky",
     1: "Mainly clear",
@@ -27,14 +29,15 @@ function getWeatherCondition(code: number): string {
   };
 
   return weatherConditions[code] ?? "Unknown conditions";
-};
+}
 
 function getDayName(date: string): string {
   return new Intl.DateTimeFormat("en-US", {
-    weekday: "short",
+    weekday: "long",
     timeZone: "UTC",
   }).format(new Date(`${date}T00:00:00Z`));
-};
+}
+
 
 const WEATHER_API_URL = "https://api.open-meteo.com/v1/forecast";
 
@@ -42,7 +45,7 @@ export async function getWeatherForecast(
   latitude: number,
   longitude: number,
   startDate: string,
-  tripDays: number
+  tripDays: number,
 ): Promise<WeatherForecastResult> {
   try {
     // Calculate trip end date using UTC to avoid timezone issues.
@@ -65,23 +68,29 @@ export async function getWeatherForecast(
 
     const endDate = tripEnd.toISOString().slice(0, 10);
 
+    // Calculate 16-day forecast window starting from today in IST.
+    const todayStr = getTodayIST();
+
     // Build Open-Meteo request.
     const params = new URLSearchParams({
       latitude: latitude.toString(),
       longitude: longitude.toString(),
-      daily: [
-        "temperature_2m_max",
-        "temperature_2m_min",
-        "weather_code",
-      ].join(","),
+      daily: ["temperature_2m_max", "temperature_2m_min", "weather_code"].join(
+        ",",
+      ),
+      past_days: "30",
       forecast_days: "16",
-      timezone: "auto",
+      timezone: "Asia/Kolkata",
       temperature_unit: "celsius",
       precipitation_unit: "mm",
+      cache_date: todayStr,
     });
 
     const response = await fetch(`${WEATHER_API_URL}?${params}`, {
       signal: AbortSignal.timeout(10_000),
+      next: {
+        revalidate: 86400, // Cache for 24 hours; refreshes at 12:00 AM IST via `cache_date`
+      },
     });
 
     if (!response.ok) {
@@ -97,7 +106,6 @@ export async function getWeatherForecast(
       !Array.isArray(daily.time) ||
       !Array.isArray(daily.temperature_2m_max) ||
       !Array.isArray(daily.temperature_2m_min) ||
-      !Array.isArray(daily.precipitation_sum) ||
       !Array.isArray(daily.weather_code)
     ) {
       throw new Error("Invalid weather API response.");
@@ -105,8 +113,8 @@ export async function getWeatherForecast(
 
     const forecastDays: WeatherForecastDay[] = daily.time
       .map((date: string, index: number) => {
-        const temperatureMax = daily.temperature_2m_max[index];
-        const temperatureMin = daily.temperature_2m_min[index];
+        const temperatureMax = parseInt(daily.temperature_2m_max[index]);
+        const temperatureMin = parseInt(daily.temperature_2m_min[index]);
         const weatherCode = daily.weather_code[index];
 
         // Skip incomplete forecast entries.
@@ -134,7 +142,7 @@ export async function getWeatherForecast(
       })
       .filter(
         (day: WeatherForecastDay | null): day is WeatherForecastDay =>
-          day !== null
+          day !== null,
       );
 
     // No overlapping forecast dates.
@@ -146,15 +154,16 @@ export async function getWeatherForecast(
       };
     }
 
-    const status =
-      forecastDays.length === tripDays ? "available" : "partial";
+    const status = forecastDays.length === tripDays ? "available" : "partial";
 
     return {
       status,
       days: forecastDays,
-      ...(status === "partial" && {
-        message: `Weather forecast available for ${forecastDays.length} of ${tripDays} trip days.`,
-      }),
+      ...(status === "partial"
+        ? {
+            message: `Weather forecast available for ${forecastDays.length} of ${tripDays} trip days.`,
+          }
+        : { message: `Data available for all ${tripDays} days.` }),
     };
   } catch (error) {
     console.error("[Weather] Forecast fetch failed:", error);

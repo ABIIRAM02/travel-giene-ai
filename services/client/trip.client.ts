@@ -1,6 +1,6 @@
 import { api } from "@/utils/api";
 import { tripResponse, tripsResponse } from "@/utils/types";
-import { TripInput } from "@/validators/trip.schema";
+import { TripInput, TripUpdateInput } from "@/validators/trip.schema";
 
 
 export async function generateTrip(data: TripInput) {
@@ -25,5 +25,12 @@ export async function fetchTripById(id:string) {
 export async function deleteTripById(id:string) {
   return api<tripResponse>(`/api/trips/${id}`, {
     method: "DELETE",
+  });
+}
+
+export async function updateTripById(id:string, data: TripUpdateInput) {
+  return api<tripResponse>(`/api/trips/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
   });
 }

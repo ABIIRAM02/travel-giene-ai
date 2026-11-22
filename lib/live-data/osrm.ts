@@ -1,25 +1,4 @@
-export type RouteStop = {
-  name: string;
-  latitude: number;
-  longitude: number;
-};
-
-export type RouteLeg = {
-  from: string;
-  to: string;
-  distanceKm: number;
-  durationMinutes: number;
-};
-
-type OsrmMultiRouteResponse = {
-  code: string;
-  routes: {
-    legs: {
-      distance: number;
-      duration: number;
-    }[];
-  }[];
-};
+import { OsrmMultiRouteResponse, RouteLeg, RouteStop } from "@/utils/types";
 
 export async function getRouteEstimates(
   stops: RouteStop[],

@@ -83,9 +83,26 @@ const tripImageSchema = z.object({
   imagePhotographerUrl: z.string().url().nullable().optional(),
 });
 
+export const weatherForecastDaySchema = z.object({
+  date: z.string(),
+  dayOfWeek: z.string(),
+  temperatureMax: z.number(),
+  temperatureMin: z.number(),
+  condition: z.string(),
+});
+
+export const weatherForecastResultSchema = z.object({
+  status: z.string(),
+  days: z.array(weatherForecastDaySchema),
+  message: z.string().optional(),
+});
+
 export const tripUpdateSchema = tripSchema
   .partial()
-  .extend(tripImageSchema.shape)
+  .extend({
+    ...tripImageSchema.shape,
+    weather: weatherForecastResultSchema.optional(),
+  })
   .refine((data) => Object.keys(data).length > 0, {
     message: "At least one field is required to update",
   });
