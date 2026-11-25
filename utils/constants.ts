@@ -78,3 +78,5 @@ export const TRAVEL_STYLE = [
 ]
 
 export const TRAVEL_GROUPS = ["Solo", "Couple", "Family", "Friends"];
+
+export const ITINERARY_GENERATION_COST = 5;

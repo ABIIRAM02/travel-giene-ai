@@ -3,7 +3,8 @@ export const userSelect = {
   name: true,
   email: true,
   plan: true,
-  credits: true,
+  subscriptionCredits: true,
+  purchasedCredits: true,
 } as const;
 
 export const tripSelect = {
