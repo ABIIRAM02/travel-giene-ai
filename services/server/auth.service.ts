@@ -31,7 +31,8 @@ export async function registerUser(data: RegisterInput) {
       name: true,
       email: true,
       plan: true,
-      credits: true,
+      subscriptionCredits: true,
+      purchasedCredits: true,
       createdAt: true,
     },
   });
@@ -64,10 +65,11 @@ export async function loginUser(data: LoginInput) {
 
   // Return created user
   return {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    credits: user.credits,
-    plan: user.plan,
-  };
+      id: true,
+      name: true,
+      email: true,
+      plan: true,
+      subscriptionCredits: true,
+      purchasedCredits: true,
+    };
 }

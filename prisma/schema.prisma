@@ -7,6 +7,35 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Plan {
+  FREE
+  EXPLORER
+  ADVENTURER
+}
+
+enum CreditTransactionType {
+  FREE_ALLOCATION
+  SUBSCRIPTION_ALLOCATION
+  PURCHASE
+  GENERATION
+  REFUND
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  INCOMPLETE
+  EXPIRED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
 enum ItineraryStatus {
   PENDING
   GENERATING
@@ -50,10 +79,77 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String
-  plan      String   @default("FREE")
-  credits   Int      @default(10)
+  password  String
+
+  plan                Plan @default(FREE)
+  subscriptionCredits Int  @default(0)
+  purchasedCredits    Int  @default(0)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  password  String   
-  trips     Trip[]
+
+  trips               Trip[]
+  subscription        Subscription?
+  payments            Payment[]
+  creditTransactions  CreditTransaction[]
+}
+
+model CreditTransaction {
+  id          String   @id @default(cuid())
+  userId      String
+
+  amount      Int
+  type        CreditTransactionType
+  description String?
+
+  subscriptionDelta Int @default(0)
+  purchasedDelta    Int @default(0)
+
+  referenceId String?  @unique
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+}
+
+model Subscription {
+  id                   String @id @default(cuid())
+  userId               String @unique
+
+  stripeCustomerId     String? @unique
+  stripeSubscriptionId String? @unique
+
+  plan                 Plan
+  status               SubscriptionStatus
+
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+
+  cancelAtPeriodEnd    Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Payment {
+  id                    String @id @default(cuid())
+  userId                String
+
+  stripeSessionId       String? @unique
+  stripePaymentIntentId String? @unique
+
+  amount                Int
+  currency              String @default("INR")
+  status                PaymentStatus @default(PENDING)
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
 }
